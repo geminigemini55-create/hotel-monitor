@@ -1,0 +1,43 @@
+name: Hotel Room Check
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+  workflow_dispatch:
+
+jobs:
+  check-room:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install packages
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: |
+          python hotel_check.py
+
+      - name: Commit CSV
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add hotel_room_log.csv
+
+          git diff --cached --quiet || git commit -m "Update room log"
+
+      - name: Push CSV
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
