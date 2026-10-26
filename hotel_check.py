@@ -66,8 +66,8 @@ with open(
 
     writer.writerow([
         timestamp,
-        ",".join(available_rooms),
-        ",".join(preparing_rooms)
+        "'" + ",".join(available_rooms),
+        "'" + ",".join(preparing_rooms)
     ])
 
 print("記録完了")
