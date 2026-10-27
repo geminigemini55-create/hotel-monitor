@@ -6,10 +6,16 @@ import re
 
 url = "https://www.hotenavi.com/pierre/empty"
 
-html = requests.get(
+response = requests.get(
     url,
-    headers={"User-Agent": "Mozilla/5.0"}
-).text
+    headers={
+        "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130.0 Safari/537.36"
+    },
+    timeout=60
+)
+
+html = response.text
 
 soup = BeautifulSoup(html, "html.parser")
 
