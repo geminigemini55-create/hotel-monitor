@@ -1,5 +1,8 @@
 name: Hotel Room Check
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -37,7 +40,6 @@ jobs:
 
           git diff --cached --quiet || git commit -m "Update room log"
 
-      - name: Push CSV
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+       - name: Push CSV
+        run: |
+          git push
